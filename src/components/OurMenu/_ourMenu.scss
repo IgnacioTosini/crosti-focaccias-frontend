@@ -1,0 +1,72 @@
+@use '../../styles/variables' as *;
+@use 'sass:color';
+
+.ourMenu {
+    padding: 4rem 2rem;
+    text-align: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: $color-text;
+    background-color: $primary-color;
+
+    .ourMenuTitle {
+        font-size: $font-size-xxlarge;
+        font-weight: $font-weight-bold;
+        margin-bottom: 2rem;
+
+        &::after {
+            content: '';
+            display: block;
+            width: clamp(80px, 50%, 120px);
+            height: 4px;
+            background-color: color.adjust($color-button, $lightness: 10%);
+            margin: 1rem auto 0 auto;
+            border-radius: 2px;
+        }
+    }
+
+    .menuItemsContainer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 2rem;
+
+        @media (max-width: 1200px) {
+            justify-content: center;
+        }
+    }
+
+    .extraInfo {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-top: 3rem;
+        padding: 1rem 2rem;
+        background-color: $tertiary-color;
+        border-radius: .5rem;
+        font-size: $font-size-medium;
+        border-left: 4px solid $color-button-secondary;
+
+        svg {
+            color: $color-button-secondary;
+            font-size: 2rem;
+            margin-top: 4px;
+        }
+
+        .extraInfoContent {
+            text-align: left;
+
+            h4 {
+                margin: 0 0 0.5rem 0;
+                font-size: $font-size-medium-large;
+                font-weight: $font-weight-bold;
+            }
+
+            p {
+                margin: 0;
+                line-height: 1.5;
+            }
+        }
+    }
+}

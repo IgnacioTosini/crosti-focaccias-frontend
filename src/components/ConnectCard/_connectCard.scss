@@ -1,0 +1,74 @@
+@use '../../styles/variables' as *;
+@use 'sass:color';
+
+.connectCard {
+    background-color: $quaternary-color;
+    border-radius: .5rem;
+    padding: 1rem;
+    text-align: center;
+    width: 200px;
+
+    .connectCardIcon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 2rem;
+        margin: 0 auto 1rem auto;
+        font-size: $font-size-xxlarge;
+        color: $color-text-tertiary;
+        margin-bottom: 0.5rem;
+        background-color: color.adjust($quaternary-color, $lightness: -20%);
+
+        .whatsappIcon,
+        .instagramIcon,
+        .mapIcon {
+            padding: .5rem;
+        }
+
+        .whatsappIcon {
+            color: $color-whatsapp;
+        }
+
+        .instagramIcon {
+            color: $color-instagram;
+        }
+
+        .mapIcon {
+            color: #2563EB;
+        }
+    }
+
+    .connectCardTitle {
+        font-size: $font-size-medium-large;
+        font-weight: $font-weight-bold;
+        color: $color-text-tertiary;
+        margin-bottom: 0.5rem;
+    }
+
+    .connectCardDescription {
+        font-size: $font-size-normal;
+        font-weight: $font-weight-regular;
+        color: $color-text-tertiary;
+        text-decoration: none;
+    }
+
+    .WhatsApp {
+        color: $color-whatsapp;
+        transition: color 0.3s ease-in-out;
+
+        &:hover {
+            color: color.adjust($color-whatsapp, $lightness: 20%);
+        }
+    }
+
+    .Instagram {
+        color: color.adjust($color-instagram , $lightness: 10%);
+        transition: color 0.3s ease-in-out;
+
+        &:hover {
+            color: color.adjust($color-instagram, $lightness: 30%);
+        }
+    }
+}

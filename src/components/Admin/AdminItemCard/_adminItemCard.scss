@@ -1,0 +1,125 @@
+@use '../../../styles/variables' as *;
+@use 'sass:color';
+
+.adminItemCard {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    text-align: center;
+    background-color: $secondary-color;
+    border-bottom: 1px solid rgba($border-color, 0.3);
+    padding: 1rem;
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
+
+    &:nth-last-child(1) {
+        border-radius: 0 0 1rem 1rem;
+    }
+
+    &:hover {
+        background-color: color.adjust($secondary-color, $lightness: -5%);
+    }
+
+    @media (max-width: 576px) {
+        flex-direction: column;
+        align-items: center;
+
+        .adminItemCardContent {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    .adminItemCardContent {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+        padding: 0 1rem;
+
+        .adminItemCardHeader {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+
+            @media (max-width: 576px) {
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 1rem;
+            }
+
+            .adminItemName {
+                font-size: $font-size-large;
+                font-weight: $font-weight-bold;
+                color: $color-text;
+                margin-bottom: 0.5rem;
+            }
+
+            .itemCategory {
+                position: relative;
+                font-size: $font-size-small;
+                font-weight: $font-weight-medium;
+                padding: 0.25rem 0.5rem;
+                top: 0;
+                right: 0;
+                color: $color-text-tertiary;
+                background-color: rgba($color-success, 0.7);
+            }
+        }
+
+        .adminItemDescription {
+            font-size: $font-size-medium-large;
+            font-weight: $font-weight-regular;
+            color: $color-text-secondary;
+            margin-bottom: 1rem;
+        }
+
+        .adminItemPrice {
+            font-size: $font-size-large;
+            font-weight: $font-weight-bold;
+            color: $color-text-secondary;
+        }
+
+        .adminItemImage {
+            width: 100%;
+            max-width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+    }
+
+    .adminItemCardActions {
+        display: flex;
+        gap: 0.5rem;
+
+        .adminItemCardEditButton,
+        .adminItemCardDeleteButton {
+            padding: 0.5rem 1rem;
+            font-size: $font-size-medium;
+            font-weight: $font-weight-medium;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+
+            &:hover {
+                background-color: $color-hover-secondary;
+                color: $color-text-tertiary;
+            }
+        }
+
+        .adminItemCardEditButton {
+            background-color: $color-button-secondary;
+            color: $color-text-tertiary;
+        }
+
+        .adminItemCardDeleteButton {
+            background-color: $color-error;
+            color: $color-text-tertiary;
+        }
+    }
+}

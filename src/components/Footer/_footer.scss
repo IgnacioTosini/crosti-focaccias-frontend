@@ -1,0 +1,107 @@
+@use '../../styles/variables' as *;
+@use 'sass:color';
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: $quinary-color;
+    color: $color-text-tertiary;
+
+    @media (max-width: 768px) {
+        .footerTop {
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+    }
+
+    .footerTop {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 0;
+        width: 100%;
+        max-width: 1200px;
+
+        .footerLogo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+
+            img {
+                width: 5rem;
+                border-radius: 3rem;
+            }
+
+            figcaption {
+                font-size: $font-size-medium-large;
+                font-weight: $font-weight-medium;
+            }
+        }
+
+        .footerLinks {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+
+            .footerIcon {
+                cursor: pointer;
+                width: 20px;
+                height: 20px;
+                color: $color-text-tertiary;
+                transition: color 0.3s ease-in-out;
+            }
+
+            .instagram {
+                &:hover {
+                    color: $color-instagram;
+                }
+            }
+
+            .whatsapp {
+                &:hover {
+                    color: $color-whatsapp;
+                }
+            }
+        }
+
+        .footerCredit {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: $font-size-normal;
+
+            .heartIcon {
+                color: $color-error;
+            }
+        }
+    }
+
+    .footerBottom {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 1rem 0;
+
+        p,
+        span {
+            font-size: $font-size-small;
+        }
+
+        &::before {
+            content: '';
+            width: 90%;
+            height: 1px;
+            background-color: $quaternary-color;
+            margin-bottom: 1rem;
+        }
+    }
+}

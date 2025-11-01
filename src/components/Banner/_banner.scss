@@ -1,0 +1,88 @@
+@use '../../styles/variables' as *;
+@use 'sass:color';
+
+.banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    background-color: $primary-color;
+    padding: 2rem 1rem;
+
+    .bannerImage {
+        width: 100%;
+        max-width: clamp(150px, 30%, 250px);
+        margin-bottom: 1rem;
+        border-radius: 2rem;
+    }
+
+    .bannerText {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: $color-text;
+            font-size: clamp($font-size-xxlarge, 4vw, $font-size-xxxlarge);
+
+            span {
+                color: $color-text-secondary;
+            }
+        }
+
+        .bannerSubtitle {
+            color: $color-text;
+            font-size: clamp($font-size-large, 4vw, $font-size-xlarge);
+        }
+    }
+
+    .buttonsContainer {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+
+        .menuButton,
+        .whatsappButton {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            font-size: $font-size-medium-large;
+            font-weight: $font-weight-medium;
+            border: none;
+            border-radius: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            a {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                color: $color-text-tertiary;
+                text-decoration: none;
+            }
+        }
+
+        .menuButton {
+            background-color: $color-button;
+            color: $color-text-tertiary;
+
+            &:hover {
+                background-color: color.adjust($color-button, $lightness: -10%);
+            }
+        }
+
+        .whatsappButton {
+            background-color: $color-whatsapp;
+            color: $color-text-tertiary;
+
+            &:hover {
+                background-color: color.adjust($color-whatsapp, $lightness: -10%);
+            }
+        }
+    }
+}

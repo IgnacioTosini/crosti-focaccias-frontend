@@ -1,0 +1,171 @@
+@use '../../../styles/variables' as *;
+@use 'sass:color';
+
+.adminFormContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: $secondary-color;
+    border-radius: 1rem;
+    border-left: 4px solid $color-button;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    padding: 2rem;
+    margin: 2rem auto;
+
+    h2 {
+        font-size: $font-size-large;
+        color: $color-text;
+        margin-bottom: 1.5rem;
+    }
+
+    .adminForm {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        width: 100%;
+        color: $color-text;
+
+        .row {
+            display: flex;
+            gap: 1rem;
+            width: 100%;
+
+            @media (max-width: 768px) {
+                flex-direction: column;
+            }
+        }
+
+        .formGroup {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 0.5rem;
+            flex: 1;
+            width: 100%;
+
+            label {
+                font-size: $font-size-medium;
+                font-weight: $font-weight-medium;
+            }
+
+            input,
+            textarea,
+            select {
+                padding: 0.5rem;
+                border: 1px solid $primary-color;
+                border-radius: 0.5rem;
+                font-size: $font-size-normal;
+                transition: border-color 0.2s ease;
+
+                &:focus {
+                    border-color: $color-button;
+                    outline: none;
+                }
+            }
+
+            input[type="text"],
+            input[type="number"] {
+                width: 100%;
+                max-width: 350px;
+            }
+
+            textarea {
+                resize: vertical;
+                min-height: 80px;
+                max-height: 200px;
+            }
+
+            input[type="checkbox"] {
+                appearance: none;
+                -webkit-appearance: none;
+                width: 22px;
+                height: 22px;
+                border: 2px solid $color-button;
+                border-radius: 0.25rem;
+                cursor: pointer;
+                position: relative;
+                margin: 0 0.5rem 0 0;
+                transition: border-color 0.2s;
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            input[type="checkbox"]:checked {
+                position: relative;
+                background: $color-button;
+                border-color: $color-button;
+            }
+
+            input[type="checkbox"]:checked::after {
+                content: '';
+                display: block;
+                position: absolute;
+                left: 5px;
+                top: 0px;
+                width: 6px;
+                height: 12px;
+                border: solid #fff;
+                border-width: 0 3px 3px 0;
+                transform: rotate(45deg);
+            }
+        }
+
+        .imageRow {
+            display: flex;
+            align-items: flex-end;
+            gap: 2rem;
+            width: 100%;
+
+            @media (max-width: 768px) {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        .previewImageContainer {
+            display: flex;
+            align-items: center;
+            min-width: 120px;
+            min-height: 120px;
+            max-width: 180px;
+            max-height: 180px;
+            border: 1px solid $primary-color;
+            border-radius: 0.5rem;
+            margin-left: 1rem;
+
+            .previewImage {
+                max-width: 100%;
+                max-height: 160px;
+                border-radius: 0.5rem;
+            }
+        }
+
+        .checkboxRow {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .submitButtonContainer {
+            display: flex;
+            gap: 1rem;
+
+            button {
+                background-color: $color-button;
+                color: $color-text-tertiary;
+                padding: 0.75rem 1.5rem;
+                border: none;
+                border-radius: 0.5rem;
+                font-size: $font-size-medium;
+                font-weight: $font-weight-bold;
+                cursor: pointer;
+                transition: background-color 0.2s ease;
+
+                &:hover {
+                    background-color: color.scale($color-button, $lightness: -10%);
+                }
+            }
+        }
+    }
+}

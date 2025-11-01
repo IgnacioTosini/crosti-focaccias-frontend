@@ -1,0 +1,74 @@
+@use '../../../styles/variables' as *;
+@use 'sass:color';
+
+.productListContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+    width: 100%;
+    max-width: 1200px;
+
+    .header {
+        position: relative;
+        background-color: $quaternary-color;
+        border-radius: 0.5rem 0.5rem 0 0;
+        padding: 1rem;
+
+        h1 {
+            font-size: $font-size-large;
+            font-weight: $font-weight-extra-bold;
+            color: $color-text-tertiary;
+            width: 100%;
+
+            @media (max-width: 576px) {
+                font-size: $font-size-medium-large;
+                text-align: center;
+            }
+        }
+
+        .downButton {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba($tertiary-color, 0.5);
+            border: none;
+            color: $color-text-secondary;
+            font-size: 1.5rem;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+
+            @media (max-width: 576px) {
+                top: auto;
+                bottom: 1rem;
+                right: 50%;
+                transform: translateX(50%);
+            }
+        }
+    }
+
+    .productListUl {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        gap: 1.5rem;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .open {
+        max-height: 600px;
+    }
+}

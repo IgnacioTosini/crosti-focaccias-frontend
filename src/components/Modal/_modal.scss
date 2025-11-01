@@ -1,0 +1,90 @@
+@use '../../styles/variables' as *;
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease-in-out;
+
+    .modalContent {
+        position: relative;
+        border-radius: 1rem;
+        padding: 2rem;
+        width: 100%;
+        max-width: 750px;
+        overflow: auto;
+        animation: slideIn 0.3s ease-in-out;
+
+        @media (max-width: 768px) {
+            padding: 1rem;
+            margin: 1rem;
+        }
+
+        .modalClose {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba($tertiary-color, 0.5);
+            border: none;
+            color: $color-text-secondary;
+            font-size: 1.5rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease;
+            z-index: 10;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        .modalImageContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modalImage {
+            width: 100%;
+            max-width: 750px;
+            border-radius: 1rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            object-fit: contain;
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

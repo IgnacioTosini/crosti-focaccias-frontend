@@ -1,0 +1,103 @@
+@use '../../styles/variables' as *;
+@use 'sass:color';
+
+.itemCard {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: $secondary-color;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+    width: 100%;
+    max-width: 350px;
+    height: 100%;
+    max-height: 500px;
+    cursor: pointer;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .itemImageContainer {
+        border-radius: 1rem 1rem 0 0;
+        overflow: hidden;
+        width: 100%;
+        max-height: 300px;
+        object-fit: cover;
+
+        .itemImage {
+            width: 100%;
+            border-radius: 1rem 1rem 0 0;
+            height: auto;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+
+            &:hover {
+                transform: scale(1.10);
+            }
+        }
+    }
+
+    .itemName {
+        font-size: $font-size-large;
+        font-weight: $font-weight-extra-bold;
+        color: $color-text;
+        padding: 0.5rem 1rem;
+    }
+
+    .itemDescription {
+        font-size: $font-size-normal;
+        color: $color-text-secondary;
+        padding: 0 1rem;
+        text-align: left;
+    }
+
+    .itemCardFooter {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 1rem;
+
+        .itemPrice {
+            font-size: $font-size-medium-large;
+            font-weight: $font-weight-bold;
+            color: $color-text-secondary;
+            padding: 1rem;
+        }
+
+        .addToCartButton {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: $color-button;
+            color: $color-text-tertiary;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-size: $font-size-normal;
+            font-weight: $font-weight-medium;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: color.adjust($color-hover-primary, $lightness: -10%);
+            }
+        }
+    }
+
+    .itemFeature {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        background-color: color.adjust($color-button-secondary, $lightness: -10%);
+        color: $color-text-tertiary;
+        padding: 0.25rem 0.5rem;
+        border-radius: 1rem;
+    }
+}

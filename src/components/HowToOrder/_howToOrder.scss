@@ -1,0 +1,72 @@
+@use '../../styles/variables' as *;
+@use 'sass:color';
+
+.howToOrder {
+    padding: 4rem 2rem;
+    text-align: center;
+    background-color: $secondary-color;
+    color: $color-text;
+    width: 100%;
+
+    .howToOrderTitle {
+        font-size: $font-size-xxlarge;
+        font-weight: $font-weight-bold;
+        margin-bottom: 2rem;
+
+        &::after {
+            content: '';
+            display: block;
+            width: clamp(80px, 50%, 120px);
+            height: 4px;
+            background-color: color.adjust($color-button, $lightness: 10%);
+            margin: 1rem auto 0 auto;
+            border-radius: 2px;
+        }
+    }
+
+    .howToOrderSteps {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 2rem;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .step {
+            background-color: $primary-color;
+            padding: 1rem;
+            border-radius: 1rem;
+            width: fit-content;
+            max-width: 600px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.452);
+
+            .stepTitle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                width: fit-content;
+                font-size: $font-size-large;
+                font-weight: $font-weight-bold;
+                margin-bottom: 1rem;
+
+                .stepIconContact {
+                    color: $color-whatsapp;
+                }
+
+                .stepIconMap {
+                    color: #2563EB;
+                }
+            }
+
+            .stepDescription {
+                width: fit-content;
+                font-size: $font-size-medium;
+                line-height: 1.6;
+            }
+        }
+    }
+}

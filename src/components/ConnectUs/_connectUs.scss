@@ -1,0 +1,38 @@
+@use '../../styles/variables' as *;
+@use 'sass:color';
+
+.connectUs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+    background-color: $quaternary-color;
+    width: 100%;
+
+    @media (max-width: 768px) {
+        padding: 1rem;
+    }
+
+    .connectUsTitle {
+        font-size: $font-size-xlarge;
+        font-weight: $font-weight-bold;
+        color: $color-text-tertiary;
+        margin-bottom: 1rem;
+    }
+
+    .connectCardsContainer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 1200px;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+}

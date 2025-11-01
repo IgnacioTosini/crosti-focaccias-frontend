@@ -1,0 +1,96 @@
+@use '../../styles/variables' as *;
+@use 'sass:color';
+
+.aboutUsContainer {
+    padding: 4rem 2rem;
+    text-align: center;
+    background-color: $secondary-color;
+    width: 100%;
+    color: $color-text;
+
+    .aboutUsTitle {
+        font-size: $font-size-xxlarge;
+        font-weight: $font-weight-bold;
+        margin-bottom: 2rem;
+
+        &::after {
+            content: '';
+            display: block;
+            width: clamp(80px, 50%, 120px);
+            height: 4px;
+            background-color: color.adjust($color-button, $lightness: 10%);
+            margin: 1rem auto 0 auto;
+            border-radius: 2px;
+        }
+    }
+
+    .textImageContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+
+        @media (max-width: 868px) {
+            flex-direction: column;
+        }
+
+        .textContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 450px;
+
+            .aboutUsText {
+                font-size: $font-size-medium-large;
+                line-height: 1.6;
+                text-align: start;
+                max-width: 400px;
+            }
+
+            .leafText {
+                display: flex;
+                align-items: center;
+                font-weight: $font-weight-bold;
+                background-color: $tertiary-color;
+                padding: 0.5rem 1rem;
+                border-radius: 1rem;
+
+                .leaf {
+                    color: $color-whatsapp;
+                    margin-right: 0.5rem;
+                }
+            }
+        }
+
+        .imageContainer {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: $quaternary-color;
+            padding: 1rem;
+            border-radius: 1rem;
+            width: 100%;
+            max-width: clamp(400px, 30%, 600px);
+            height: 300px;
+
+            img {
+                width: 100%;
+                max-width: clamp(150px, 30%, 250px);
+                border-radius: 50%;
+            }
+
+            .aboutUsText {
+                position: absolute;
+                bottom: 1rem;
+                font-size: $font-size-medium-large;
+                font-weight: $font-weight-bold;
+                color: $color-text-tertiary;
+            }
+        }
+    }
+}
