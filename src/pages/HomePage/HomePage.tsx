@@ -20,13 +20,15 @@ export const HomePage = () => {
 
     useEffect(() => {
         if (isOpen) {
-            document.body.style.overflow = 'hidden';
+            // Agregar clase para bloquear scroll
+            document.documentElement.classList.add('modal-open');
         } else {
-            document.body.style.overflow = 'auto';
+            // Remover clase para restaurar scroll
+            document.documentElement.classList.remove('modal-open');
         }
         // Cleanup al desmontar
         return () => {
-            document.body.style.overflow = 'auto';
+            document.documentElement.classList.remove('modal-open');
         };
     }, [isOpen]);
 

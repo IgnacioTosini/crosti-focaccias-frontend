@@ -8,7 +8,7 @@
     align-items: center;
     background-color: rgba($secondary-color, 0.7);
     padding: 1rem;
-    z-index: 1000;
+    z-index: 1500; // Entre el contenido normal (1000) y AsideOrderSummary (2000)
     width: 100%;
 
     @media (max-width: 768px) {
