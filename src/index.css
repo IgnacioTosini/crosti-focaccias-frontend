@@ -12,7 +12,6 @@ html {
 
 body {
   background-color: #F8E9D2;
-  overflow-x: hidden;
 }
 
 /* Clase para bloquear scroll cuando modal está abierto */
