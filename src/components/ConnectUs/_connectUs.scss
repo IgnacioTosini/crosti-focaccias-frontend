@@ -10,6 +10,7 @@
     padding: 2rem;
     background-color: $quaternary-color;
     width: 100%;
+    overflow-x: hidden; // Evita scroll horizontal por animaciones GSAP
 
     @media (max-width: 768px) {
         padding: 1rem;

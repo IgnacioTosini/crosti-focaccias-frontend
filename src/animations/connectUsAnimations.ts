@@ -4,14 +4,21 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export const animateConnectUs = () => {
+    // Calcular delay basado en HowToOrder + su propio tiempo
+    const estimatedItems = 5;
+    const itemAnimationDuration = 0.6;
+    const staggerDelay = 0.1;
+    const howToOrderDuration = 1.4; // Duración estimada de HowToOrder
+    const totalItemsTime = (estimatedItems * staggerDelay) + itemAnimationDuration;
+    
     const timeline = gsap.timeline({
         scrollTrigger: {
             trigger: '.connectUs',
-            start: 'top 55%',
+            start: 'top 70%',
             toggleActions: 'play none none none'
         },
         defaults: { ease: 'power3.out' },
-        delay: 1
+        delay: totalItemsTime + howToOrderDuration + 0.3 // Todo + buffer
     });
 
     // Animar el título
