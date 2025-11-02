@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { Pedido, PedidoRequest, ApiResponse } from "../types";
 
-const BASE_URL = 'http://localhost:8080/api/pedidos';
+const BASE_URL = import.meta.env.VITE_PEDIDOS_URL || 'http://localhost:8080/api/pedidos';
 
 export class PedidoService {
 

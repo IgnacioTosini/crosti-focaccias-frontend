@@ -4,7 +4,7 @@ export const animateAsideOrderSummaryOpen = (element: HTMLElement, overlay: HTML
     const timeline = gsap.timeline();
 
     // Animar el overlay (fade in)
-    timeline.fromTo(overlay, 
+    timeline.fromTo(overlay,
         { opacity: 0 },
         { opacity: 1, duration: 0.3, ease: 'power2.out' }
     );

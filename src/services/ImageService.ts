@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getApiKeyFromUrl } from "./ProductService";
 
-const CLOUDINARY_UPLOAD_URL = "http://localhost:8080/api/cloudinary/upload";
+const CLOUDINARY_UPLOAD_URL = import.meta.env.CLOUDINARY_UPLOAD_URL || "http://localhost:8080/api/cloudinary/upload";
 
 export type CloudinaryUploadResponse = {
     success: boolean;
