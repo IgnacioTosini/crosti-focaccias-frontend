@@ -1,8 +1,13 @@
+import { useEffect } from 'react';
 import { IoCartOutline, IoLogoWhatsapp } from 'react-icons/io5'
 import { handleWhatsAppClick } from '../../utils'
+import { animateBanner } from '../../animations'
 import './_banner.scss'
 
 export const Banner = () => {
+  useEffect(() => {
+    animateBanner();
+  }, []);
 
   return (
     <div className="banner">

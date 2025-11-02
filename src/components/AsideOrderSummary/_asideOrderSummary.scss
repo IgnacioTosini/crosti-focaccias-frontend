@@ -11,13 +11,6 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0);
     z-index: 1000;
-    animation: fadeIn 0.3s ease-in-out forwards;
-
-    @keyframes fadeIn {
-        to {
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-    }
 
     .asideOrderSummary {
         display: flex;
@@ -29,13 +22,6 @@
         height: 100%;
         box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
         transform: translateX(100%);
-        animation: slideIn 0.3s ease-in-out forwards;
-
-        @keyframes slideIn {
-            to {
-                transform: translateX(0);
-            }
-        }
 
         .asideOrderSummaryHeader {
             display: flex;

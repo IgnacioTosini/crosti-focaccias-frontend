@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { usePedidoContext } from '../../context/pedidoContext';
 import { FaShoppingCart } from 'react-icons/fa';
 import { IoClose } from 'react-icons/io5';
@@ -6,21 +6,43 @@ import { ItemCardInOrder } from '../ItemCardInOrder/ItemCardInOrder';
 import { BiTrash } from 'react-icons/bi';
 import { FiMessageCircle } from 'react-icons/fi';
 import { toast } from 'react-toastify';
+import { animateAsideOrderSummaryOpen, animateAsideOrderSummaryClose } from '../../animations';
 import './_asideOrderSummary.scss';
 
 export const AsideOrderSummary = () => {
     const { preOrder, clearPreOrder, setIsOpen, createPedido } = usePedidoContext();
     const [clientPhone, setClientPhone] = useState('');
+    const [isClosing, setIsClosing] = useState(false);
+    const panelRef = useRef<HTMLDivElement>(null);
+    const overlayRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (panelRef.current && overlayRef.current) {
+            animateAsideOrderSummaryOpen(panelRef.current, overlayRef.current);
+        }
+    }, []);
+
+    const handleClose = () => {
+        if (isClosing || !panelRef.current || !overlayRef.current) return;
+
+        setIsClosing(true);
+        animateAsideOrderSummaryClose(panelRef.current, overlayRef.current, () => {
+            setIsOpen(false);
+            setIsClosing(false);
+        });
+    };
 
     const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
         if (e.target === e.currentTarget) {
-            setIsOpen(false);
+            handleClose();
         }
     };
 
     const handleMenuClick = () => {
-        setIsOpen(false);
-        window.location.href = "#menu";
+        handleClose();
+        setTimeout(() => {
+            window.location.href = "#menu";
+        }, 400);
     };
 
     const isValidPhone = (phone: string) => {
@@ -48,7 +70,7 @@ export const AsideOrderSummary = () => {
         message += `================================\n\n`;
         message += `Mi telefono de contacto:\n${clientPhone}\n\n`;
         message += `Muchas gracias!`;
-        
+
         return message;
     };
 
@@ -79,7 +101,7 @@ export const AsideOrderSummary = () => {
 
             toast.success('Pedido guardado exitosamente. ¡Serás redirigido a WhatsApp!');
             setClientPhone('');
-            setIsOpen(false);
+            handleClose();
         } catch (error) {
             toast.error('Error al guardar el pedido');
             console.error(error);
@@ -87,13 +109,13 @@ export const AsideOrderSummary = () => {
     };
 
     return (
-        <div className='asideOrderSummaryOverlay' onClick={handleOverlayClick}>
-            <div className='asideOrderSummary'>
+        <div className='asideOrderSummaryOverlay' ref={overlayRef} onClick={handleOverlayClick}>
+            <div className='asideOrderSummary' ref={panelRef}>
                 <div className='asideOrderSummaryHeader'>
                     <div className='asideOrderSummaryTitle'>
                         <FaShoppingCart className='asideOrderSummaryIcon' /> <p className='asideOrderSummaryText'>Tu pedido {<span className='asideOrderSummaryNumber'>{preOrder.quantity}</span>}</p>
                     </div>
-                    <IoClose onClick={() => setIsOpen(false)} className='asideOrderSummaryCloseButton' />
+                    <IoClose onClick={handleClose} className='asideOrderSummaryCloseButton' />
                 </div>
 
                 <div className='asideOrderSummaryContent'>

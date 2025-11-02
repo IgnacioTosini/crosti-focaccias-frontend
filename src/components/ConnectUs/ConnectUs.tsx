@@ -1,7 +1,13 @@
+import { useEffect } from 'react';
 import { ConnectCard } from '../ConnectCard/ConnectCard'
+import { animateConnectUs } from '../../animations';
 import './_connectUs.scss'
 
 export const ConnectUs = () => {
+  useEffect(() => {
+    animateConnectUs();
+  }, []);
+
   return (
     <div className='connectUs'>
       <h2 className='connectUsTitle'>¡Conectemos!</h2>

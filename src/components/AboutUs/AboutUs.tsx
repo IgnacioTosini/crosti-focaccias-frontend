@@ -1,7 +1,13 @@
+import { useEffect } from 'react';
 import { IoLeafSharp } from 'react-icons/io5'
+import { animateAboutUs } from '../../animations'
 import './_aboutUs.scss'
 
 export const AboutUs = () => {
+  useEffect(() => {
+    animateAboutUs();
+  }, []);
+
   return (
     <div className='aboutUsContainer'>
       <h2 className='aboutUsTitle'>Sobre Crosti</h2>

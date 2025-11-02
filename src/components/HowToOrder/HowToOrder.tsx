@@ -1,8 +1,14 @@
+import { useEffect } from 'react';
 import { FiMessageCircle } from 'react-icons/fi'
 import { FaMapMarkerAlt } from 'react-icons/fa'
+import { animateHowToOrder } from '../../animations';
 import './_howToOrder.scss'
 
 export const HowToOrder = () => {
+  useEffect(() => {
+    animateHowToOrder();
+  }, []);
+
   return (
     <div className='howToOrder'>
       <h2 className='howToOrderTitle'>¿Cómo Pedir?</h2>

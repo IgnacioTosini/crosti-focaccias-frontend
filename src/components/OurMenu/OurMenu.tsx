@@ -1,13 +1,20 @@
-
-import { useContext } from 'react';
-import { FocacciaContext } from '../../context/focacciaContext';
+import { useEffect } from 'react';
+import { useFocacciaContext } from '../../context/focacciaContext';
 import { FaRegLightbulb } from 'react-icons/fa6'
 import { ItemCard } from '../ItemCard/ItemCard'
 import type { FocacciaItem } from '../../types';
+import { animateOurMenu } from '../../animations';
 import './_ourMenu.scss'
 
 export const OurMenu = () => {
-  const { focaccias, isLoading } = useContext(FocacciaContext);
+  const { focaccias, isLoading } = useFocacciaContext();
+
+  useEffect(() => {
+    if (!isLoading && focaccias && focaccias.length > 0) {
+      animateOurMenu();
+    }
+  }, [isLoading, focaccias]);
+
   return (
     <div className='ourMenu'>
       <h2 className='ourMenuTitle'>Nuestras Focaccias</h2>

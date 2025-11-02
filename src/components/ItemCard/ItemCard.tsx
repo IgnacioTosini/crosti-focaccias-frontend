@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { BiCart } from 'react-icons/bi'
 import { Modal } from '../Modal/Modal'
 import type { FocacciaItem } from '../../types'
 import { ItemCategory } from '../ItemCategory/ItemCategory'
 import { usePedidoContext } from '../../context/pedidoContext'
+import { animateItemCard } from '../../animations'
 import './_itemCard.scss'
 
 type ItemCardProps = {
@@ -13,6 +14,13 @@ type ItemCardProps = {
 export const ItemCard = ({ focaccia }: ItemCardProps) => {
   const [modalOpen, setModalOpen] = useState(false);
   const { addToCart } = usePedidoContext();
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (cardRef.current) {
+      animateItemCard(cardRef.current);
+    }
+  }, []);
 
   const handleAddToCart = () => {
     addToCart(focaccia);
@@ -20,7 +28,7 @@ export const ItemCard = ({ focaccia }: ItemCardProps) => {
 
   return (
     <>
-      <div className='itemCard'>
+      <div className='itemCard' ref={cardRef}>
         <picture className='itemImageContainer' onClick={() => setModalOpen(true)}>
           <img src={focaccia.imageUrl} alt={focaccia.name} className='itemImage' />
         </picture>

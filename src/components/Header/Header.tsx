@@ -1,13 +1,18 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { IoCartOutline, IoPersonOutline } from 'react-icons/io5';
 import { usePedidoContext } from '../../context/pedidoContext';
 import { getApiKeyFromUrl } from '../../services/ProductService';
+import { animateHeader } from '../../animations';
 import './_header.scss'
 
 export const Header = () => {
   const { setIsOpen, preOrder } = usePedidoContext();
   const apiKey = useMemo(() => getApiKeyFromUrl(), []);
+
+  useEffect(() => {
+    animateHeader();
+  }, []);
 
   return (
     <div className='header'>
