@@ -10,7 +10,8 @@ export const animateConnectUs = () => {
             start: 'top 55%',
             toggleActions: 'play none none none'
         },
-        defaults: { ease: 'power3.out' }
+        defaults: { ease: 'power3.out' },
+        delay: 1
     });
 
     // Animar el título
