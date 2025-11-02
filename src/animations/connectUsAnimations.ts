@@ -7,7 +7,7 @@ export const animateConnectUs = () => {
     const timeline = gsap.timeline({
         scrollTrigger: {
             trigger: '.connectUs',
-            start: 'top 80%',
+            start: 'top 55%',
             toggleActions: 'play none none none'
         },
         defaults: { ease: 'power3.out' }

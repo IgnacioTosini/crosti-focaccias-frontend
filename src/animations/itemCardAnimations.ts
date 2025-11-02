@@ -10,7 +10,7 @@ export const animateItemCard = (element: HTMLElement) => {
     gsap.from(element, {
         scrollTrigger: {
             trigger: element,
-            start: 'top 90%',
+            start: 'top 55%',
             toggleActions: 'play none none none',
             once: true
         },
