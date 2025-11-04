@@ -30,6 +30,14 @@ export const AdminItemCard = ({ item }: AdminItemCardProps) => {
   const handleEdit = () => {
     setFocacciaEdit(item);
     setIsOpen(true);
+    
+    // Scroll suave hacia el principio de la página
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }, 100); // Pequeño delay para que el modal se abra primero
   };
 
   return (

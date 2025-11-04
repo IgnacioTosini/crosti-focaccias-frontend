@@ -147,6 +147,27 @@
             margin-top: 1rem;
         }
 
+        .error {
+            color: #dc3545;
+            font-size: $font-size-small;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background-color: rgba(220, 53, 69, 0.1);
+            border-radius: 0.25rem;
+            border-left: 3px solid #dc3545;
+        }
+
+        .success {
+            color: #28a745;
+            font-size: $font-size-small;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background-color: rgba(40, 167, 69, 0.1);
+            border-radius: 0.25rem;
+            border-left: 3px solid #28a745;
+            font-weight: $font-weight-medium;
+        }
+
         .submitButtonContainer {
             display: flex;
             gap: 1rem;
