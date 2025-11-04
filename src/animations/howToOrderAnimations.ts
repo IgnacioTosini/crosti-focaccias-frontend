@@ -4,12 +4,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export const animateHowToOrder = () => {
-    // Calcular delay basado en cantidad estimada de items (ajustable)
-    const estimatedItems = 5; // Ajusta según tus focaccias
-    const itemAnimationDuration = 0.6;
-    const staggerDelay = 0.1;
-    const totalItemsTime = (estimatedItems * staggerDelay) + itemAnimationDuration;
-    
     const timeline = gsap.timeline({
         scrollTrigger: {
             trigger: '.howToOrder',
@@ -17,7 +11,6 @@ export const animateHowToOrder = () => {
             toggleActions: 'play none none none'
         },
         defaults: { ease: 'power3.out' },
-        delay: totalItemsTime + 0.5 // Tiempo de items + buffer
     });
 
     // Animar el título

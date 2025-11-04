@@ -30,6 +30,7 @@ export const FocacciaStore: React.FC<{ children: React.ReactNode }> = ({ childre
     const [message, setMessage] = useState<string>("");
     const [lastToastMessage, setLastToastMessage] = useState<string>("");
     const [lastToastTime, setLastToastTime] = useState<number>(0);
+    const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
 
     const showToast = useCallback((message: string, type: 'success' | 'error', cooldown: number = 3000) => {
         const now = Date.now();
@@ -52,7 +53,7 @@ export const FocacciaStore: React.FC<{ children: React.ReactNode }> = ({ childre
         try {
             const response = await ProductService.createFocaccia(focacciaData);
             setMessage(response.message);
-            await getFocaccias();
+            await getFocaccias(true); // Forzar recarga después de crear
             showToast("Focaccia creada exitosamente", "success");
         } catch (error) {
             setMessage(`Error al crear la focaccia: ${error}`);
@@ -62,19 +63,25 @@ export const FocacciaStore: React.FC<{ children: React.ReactNode }> = ({ childre
         }
     };
 
-    const getFocaccias = useCallback(async () => {
+    const getFocaccias = useCallback(async (force: boolean = false) => {
+        // Si ya tenemos datos y no se fuerza la recarga, no hacer nada
+        if (isDataLoaded && focaccias.length > 0 && !force) {
+            return;
+        }
+        
         setIsLoading(true);
         try {
             const response = await ProductService.getFocaccias();
             setFocaccias(response.data);
             setMessage(response.message);
+            setIsDataLoaded(true);
         } catch (error) {
             setMessage(`Error al obtener las focaccias: ${error}`);
             showToast("Error al obtener las focaccias", "error");
         } finally {
             setIsLoading(false);
         }
-    }, [showToast]);
+    }, [showToast, isDataLoaded, focaccias.length]);
 
     const getFocacciaById = async (id: number) => {
         setIsLoading(true);
@@ -95,7 +102,7 @@ export const FocacciaStore: React.FC<{ children: React.ReactNode }> = ({ childre
         try {
             const response = await ProductService.updateFocaccia(id, focacciaData);
             setMessage(response.message);
-            await getFocaccias();
+            await getFocaccias(true); // Forzar recarga después de actualizar
             showToast("Focaccia actualizada exitosamente", "success");
         } catch (error) {
             setMessage(`Error al actualizar la focaccia: ${error}`);
@@ -110,7 +117,7 @@ export const FocacciaStore: React.FC<{ children: React.ReactNode }> = ({ childre
         try {
             const response = await ProductService.deleteFocaccia(id);
             setMessage(response.message);
-            await getFocaccias();
+            await getFocaccias(true); // Forzar recarga después de eliminar
             showToast("Focaccia eliminada exitosamente", "success");
         } catch (error) {
             setMessage(`Error al eliminar la focaccia: ${error}`);

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useFocacciaContext } from '../../context/focacciaContext';
 import { FaRegLightbulb } from 'react-icons/fa6'
 import { ItemCard } from '../ItemCard/ItemCard'
+import { ItemCardSkeleton } from '../ItemCard/ItemCardSkeleton'
 import type { FocacciaItem } from '../../types';
 import { animateOurMenu } from '../../animations';
 import './_ourMenu.scss'
@@ -20,14 +21,20 @@ export const OurMenu = () => {
       <h2 className='ourMenuTitle'>Nuestras Focaccias</h2>
 
       <div className='menuItemsContainer'>
-        {isLoading && <div>Cargando...</div>}
-        {!isLoading && focaccias && focaccias.length > 0 ? (
+        {isLoading ? (
+          // Mostrar skeleton loading mientras carga
+          Array.from({ length: 6 }, (_, index) => (
+            <ItemCardSkeleton key={`skeleton-${index}`} />
+          ))
+        ) : focaccias && focaccias.length > 0 ? (
           focaccias.map((focaccia: FocacciaItem) =>
             focaccia ? <ItemCard key={focaccia.id} focaccia={focaccia} /> : null
           )
-        ) : null}
-        {!isLoading && focaccias && focaccias.length === 0 && (
-          <div>No hay focaccias disponibles.</div>
+        ) : (
+          <div className='emptyState'>
+            <p>No hay focaccias disponibles en este momento.</p>
+            <p>¡Vuelve pronto para ver nuestras deliciosas opciones!</p>
+          </div>
         )}
       </div>
 

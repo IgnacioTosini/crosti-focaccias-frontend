@@ -22,6 +22,7 @@
     }
 
     .itemImageContainer {
+        position: relative;
         border-radius: 1rem 1rem 0 0;
         overflow: hidden;
         width: 100%;
@@ -33,10 +34,69 @@
             height: 100%;
             border-radius: 1rem 1rem 0 0;
             object-fit: cover;
-            transition: transform 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+            opacity: 0;
+            position: relative;
+            z-index: 2;
+
+            &.loaded {
+                opacity: 1;
+            }
 
             &:hover {
                 transform: scale(1.10);
+            }
+        }
+
+        .imageSkeleton {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1s infinite;
+            border-radius: 1rem 1rem 0 0;
+            z-index: 1;
+        }
+
+        .imageError {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+            color: #666;
+            font-size: 0.875rem;
+            border-radius: 1rem 1rem 0 0;
+
+            span {
+                text-align: center;
+                padding: 1rem;
+            }
+        }
+
+        .imagePlaceholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 1rem 1rem 0 0;
+
+            .placeholderIcon {
+                font-size: 3rem;
+                opacity: 0.3;
+                animation: float 2s ease-in-out infinite;
             }
         }
     }
@@ -101,5 +161,23 @@
         color: $color-text-tertiary;
         padding: 0.25rem 0.5rem;
         border-radius: 1rem;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
     }
 }

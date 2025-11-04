@@ -5,18 +5,16 @@ import { ConnectUs } from '../../components/ConnectUs/ConnectUs'
 import { Header } from '../../components/Header/Header'
 import { HowToOrder } from '../../components/HowToOrder/HowToOrder'
 import { OurMenu } from '../../components/OurMenu/OurMenu'
-import { useFocacciaContext } from '../../context/focacciaContext';
 import { AsideOrderSummary } from '../../components/AsideOrderSummary/AsideOrderSummary';
 import { usePedidoContext } from '../../context/pedidoContext';
+import { usePrefetchFocaccias } from '../../hooks/usePrefetchFocaccias';
 import './_homePage.scss'
 
 export const HomePage = () => {
-    const { getFocaccias } = useFocacciaContext();
     const { isOpen } = usePedidoContext();
-    useEffect(() => {
-        getFocaccias();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    
+    // Precargar datos de focaccias de manera eficiente
+    usePrefetchFocaccias();
 
     useEffect(() => {
         if (isOpen) {
