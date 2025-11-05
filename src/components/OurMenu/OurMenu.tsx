@@ -1,14 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useFocacciaContext } from '../../context/focacciaContext';
 import { FaRegLightbulb } from 'react-icons/fa6'
 import { ItemCard } from '../ItemCard/ItemCard'
-import { ItemCardSkeleton } from '../ItemCard/ItemCardSkeleton'
+import { SmartLoading } from '../SmartLoading/SmartLoading'
 import type { FocacciaItem } from '../../types';
 import { animateOurMenu } from '../../animations';
 import './_ourMenu.scss'
 
 export const OurMenu = () => {
-  const { focaccias, isLoading } = useFocacciaContext();
+  const { focaccias, isLoading, isLoadingMore, loadMoreFocaccias } = useFocacciaContext();
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     if (!isLoading && focaccias && focaccias.length > 0) {
@@ -16,8 +17,23 @@ export const OurMenu = () => {
     }
   }, [isLoading, focaccias]);
 
-  // Si estamos cargando y no tenemos datos en caché, mostrar mensaje especial
-  const showLoadingMessage = isLoading && focaccias.length === 0;
+  // Determinar el estado de carga basado en si tenemos datos o no
+  const hasData = focaccias && focaccias.length > 0;
+  const showLoadingMessage = isLoading && !hasData;
+  const showSkeletonLoading = isLoading && hasData;
+
+  // Mostrar solo los primeros 4 inicialmente, luego todos si se solicita
+  const displayedFocaccias = showAll ? focaccias : focaccias.slice(0, 4);
+  const hasMoreToShow = focaccias.length > 4 && !showAll;
+
+  const handleLoadMore = async () => {
+    if (hasMoreToShow) {
+      setShowAll(true);
+    } else {
+      // Si ya mostramos todos los locales, cargar más del servidor
+      await loadMoreFocaccias();
+    }
+  };
 
   return (
     <div className='ourMenu'>
@@ -25,20 +41,51 @@ export const OurMenu = () => {
 
       <div className='menuItemsContainer'>
         {showLoadingMessage ? (
-          <div className='loadingState'>
-            <div className="loadingSpinner">🔄</div>
-            <p>Cargando nuestras deliciosas focaccias...</p>
-            <small>Esto puede tomar unos segundos la primera vez</small>
-          </div>
-        ) : isLoading ? (
-          // Mostrar skeleton loading mientras carga (cuando hay datos en caché)
-          Array.from({ length: 6 }, (_, index) => (
-            <ItemCardSkeleton key={`skeleton-${index}`} />
-          ))
-        ) : focaccias && focaccias.length > 0 ? (
-          focaccias.map((focaccia: FocacciaItem) =>
-            focaccia ? <ItemCard key={focaccia.id} focaccia={focaccia} /> : null
-          )
+          <SmartLoading
+            type="initial"
+            message="Cargando nuestras deliciosas focaccias..."
+          />
+        ) : showSkeletonLoading ? (
+          // Mostrar contenido actual + loading para actualizaciones
+          <>
+            {focaccias.map((focaccia: FocacciaItem) =>
+              focaccia ? <ItemCard key={focaccia.id} focaccia={focaccia} /> : null
+            )}
+            <SmartLoading type="more" />
+          </>
+        ) : hasData ? (
+          <>
+            {displayedFocaccias.map((focaccia: FocacciaItem) =>
+              focaccia ? <ItemCard key={focaccia.id} focaccia={focaccia} /> : null
+            )}
+
+            {/* Botón para cargar más */}
+            {(hasMoreToShow || focaccias.length === 4) && (
+              <div className='loadMoreContainer'>
+                <button
+                  className='loadMoreButton'
+                  onClick={handleLoadMore}
+                  disabled={isLoadingMore}
+                >
+                  {isLoadingMore ? (
+                    <>
+                      <span className="loadingSpinner">🔄</span>
+                      Cargando...
+                    </>
+                  ) : hasMoreToShow ? (
+                    `Ver ${focaccias.length - 4} focaccias más`
+                  ) : (
+                    'Ver todas las focaccias'
+                  )}
+                </button>
+              </div>
+            )}
+
+            {/* Mostrar loading mientras carga más productos */}
+            {isLoadingMore && (
+              <SmartLoading type="skeleton" count={3} />
+            )}
+          </>
         ) : (
           <div className='emptyState'>
             <p>No hay focaccias disponibles en este momento.</p>

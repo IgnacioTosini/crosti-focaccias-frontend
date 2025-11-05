@@ -95,6 +95,52 @@
                 }
             }
         }
+
+        .loadMoreContainer {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+
+            .loadMoreButton {
+                background-color: $color-button;
+                color: white;
+                border: none;
+                padding: 1rem 2rem;
+                border-radius: 1rem;
+                font-size: $font-size-medium;
+                font-weight: $font-weight-bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                min-width: 200px;
+                justify-content: center;
+
+                &:hover:not(:disabled) {
+                    background-color: color.adjust($color-button, $lightness: -10%);
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                }
+
+                &:disabled {
+                    opacity: 0.7;
+                    cursor: not-allowed;
+                    transform: none;
+                    box-shadow: none;
+                }
+
+                .loadingSpinner {
+                    animation: spin 1s linear infinite;
+                }
+
+                @keyframes spin {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
+            }
+        }
     }
 
     .extraInfo {

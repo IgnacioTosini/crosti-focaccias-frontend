@@ -1,0 +1,125 @@
+.cache-debugger {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    font-family: monospace;
+    font-size: 12px;
+    max-width: 300px;
+
+    &.collapsed {
+        width: auto;
+    }
+
+    &.expanded {
+        width: 280px;
+    }
+}
+
+.cache-debugger-toggle {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 11px;
+    width: 100%;
+
+    &:hover {
+        background: #0056b3;
+    }
+}
+
+.cache-debugger-content {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #eee;
+}
+
+.cache-stats {
+    margin-bottom: 12px;
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+
+    .label {
+        font-weight: bold;
+    }
+
+    .value {
+        color: #007bff;
+    }
+}
+
+.cache-keys {
+    margin-bottom: 12px;
+
+    strong {
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        max-height: 100px;
+        overflow-y: auto;
+        background: #f8f9fa;
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+
+    li {
+        font-size: 10px;
+        padding: 2px 0;
+        border-bottom: 1px solid #eee;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+}
+
+.cache-actions {
+    display: flex;
+    gap: 8px;
+
+    button {
+        flex: 1;
+        padding: 4px 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background: white;
+        cursor: pointer;
+        font-size: 10px;
+
+        &:hover {
+            background: #f8f9fa;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        &.force-refresh {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+
+            &:hover:not(:disabled) {
+                background: #c82333;
+            }
+        }
+    }
+}

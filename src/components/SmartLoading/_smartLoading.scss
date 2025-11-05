@@ -1,0 +1,199 @@
+@use '../../styles/variables' as *;
+@use 'sass:color';
+
+.smartLoading {
+  &.initial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 300px;
+    text-align: center;
+    gap: 1rem;
+
+    .loadingAnimation {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+
+      .focacciaIcon {
+        font-size: 3rem;
+        animation: bounce 2s infinite;
+      }
+
+      .loadingDots {
+        display: flex;
+        gap: 0.3rem;
+
+        span {
+          width: 8px;
+          height: 8px;
+          background-color: $color-button;
+          border-radius: 50%;
+          animation: wave 1.5s infinite ease-in-out;
+
+          &:nth-child(2) {
+            animation-delay: 0.1s;
+          }
+
+          &:nth-child(3) {
+            animation-delay: 0.2s;
+          }
+        }
+      }
+    }
+
+    p {
+      font-size: $font-size-medium-large;
+      font-weight: $font-weight-bold;
+      color: $color-text;
+      margin: 0;
+    }
+
+    small {
+      color: $color-text-secondary;
+      font-size: $font-size-small;
+      margin: 0;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+    }
+
+    @keyframes wave {
+      0%, 60%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      30% {
+        transform: scale(1.2);
+        opacity: 0.7;
+      }
+    }
+  }
+
+  &.more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    color: $color-text-secondary;
+    font-size: $font-size-small;
+
+    .moreLoadingSpinner {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  }
+
+  &.skeleton {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: flex-start;
+
+    @media (max-width: 1200px) {
+      justify-content: center;
+    }
+
+    .skeletonItem {
+      width: 280px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      padding: 1rem;
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        animation: shimmer 2s infinite;
+      }
+
+      .skeletonImage {
+        width: 100%;
+        height: 180px;
+        background-color: color.adjust($primary-color, $lightness: -10%);
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .skeletonContent {
+        .skeletonTitle {
+          width: 80%;
+          height: 20px;
+          background-color: color.adjust($primary-color, $lightness: -5%);
+          border-radius: 4px;
+          margin-bottom: 0.8rem;
+        }
+
+        .skeletonText {
+          width: 100%;
+          height: 14px;
+          background-color: color.adjust($primary-color, $lightness: -5%);
+          border-radius: 4px;
+          margin-bottom: 0.5rem;
+
+          &.short {
+            width: 60%;
+          }
+        }
+
+        .skeletonFooter {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 1rem;
+
+          .skeletonPrice {
+            width: 60px;
+            height: 18px;
+            background-color: color.adjust($primary-color, $lightness: -5%);
+            border-radius: 4px;
+          }
+
+          .skeletonButton {
+            width: 80px;
+            height: 36px;
+            background-color: color.adjust($primary-color, $lightness: -5%);
+            border-radius: 1rem;
+          }
+        }
+      }
+
+      @keyframes shimmer {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+    }
+  }
+}

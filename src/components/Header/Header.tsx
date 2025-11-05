@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import { IoCartOutline, IoPersonOutline } from 'react-icons/io5';
 import { usePedidoContext } from '../../context/pedidoContext';
 import { getApiKeyFromUrl } from '../../services/ProductService';
+import { usePrefetchOnHover } from '../../hooks/usePrefetchOnHover';
 import { animateHeader } from '../../animations';
 import './_header.scss'
 
 export const Header = () => {
   const { setIsOpen, preOrder } = usePedidoContext();
   const apiKey = useMemo(() => getApiKeyFromUrl(), []);
+  const { handleMouseEnter, handleMouseLeave } = usePrefetchOnHover();
 
   useEffect(() => {
     animateHeader();
@@ -22,7 +24,15 @@ export const Header = () => {
       </div>
       <nav className='navLinks'>
         <ul>
-          <li><a href="#menu">Menú</a></li>
+          <li>
+            <a 
+              href="#menu"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              Menú
+            </a>
+          </li>
           <li><a href="#sobre-nosotros">Sobre nosotros</a></li>
           <li><a href="#contacto">Contacto</a></li>
         </ul>
