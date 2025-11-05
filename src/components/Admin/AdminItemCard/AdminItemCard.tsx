@@ -30,7 +30,7 @@ export const AdminItemCard = ({ item }: AdminItemCardProps) => {
   const handleEdit = () => {
     setFocacciaEdit(item);
     setIsOpen(true);
-    
+
     // Scroll suave hacia el principio de la página
     setTimeout(() => {
       window.scrollTo({
@@ -52,8 +52,8 @@ export const AdminItemCard = ({ item }: AdminItemCardProps) => {
         <img src={item.imageUrl} alt={item.name} className='adminItemImage' />
       </div>
       <div className='adminItemCardActions'>
-  <button className='adminItemCardEditButton' onClick={handleEdit}><FaEdit /></button>
-  <button className='adminItemCardDeleteButton' onClick={handleDelete}><FaTrash /></button>
+        <button className='adminItemCardEditButton' onClick={handleEdit}><FaEdit /></button>
+        <button className='adminItemCardDeleteButton' onClick={handleDelete}><FaTrash /></button>
       </div>
     </div>
   )

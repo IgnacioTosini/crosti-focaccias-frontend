@@ -58,6 +58,43 @@
                 }
             }
         }
+
+        .loadingState {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 300px;
+            text-align: center;
+            color: $color-text;
+            gap: 1rem;
+
+            .loadingSpinner {
+                font-size: 3rem;
+                animation: spin 2s linear infinite;
+            }
+
+            p {
+                margin: 0;
+                font-size: $font-size-medium-large;
+                font-weight: $font-weight-bold;
+            }
+
+            small {
+                color: $color-text-secondary;
+                font-size: $font-size-small;
+            }
+
+            @keyframes spin {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+        }
     }
 
     .extraInfo {

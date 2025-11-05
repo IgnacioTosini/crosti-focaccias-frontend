@@ -26,9 +26,9 @@ export const ItemCard = ({ focaccia }: ItemCardProps) => {
     }
   }, []);
 
-  // Cargar imagen inmediatamente cuando tenemos URL
+  // Cargar imagen inmediatamente cuando tenemos URL válida
   useEffect(() => {
-    if (focaccia.imageUrl && !imageLoaded && !imageError) {
+    if (focaccia.imageUrl && focaccia.imageUrl.trim() !== '' && !imageLoaded && !imageError) {
       const img = new Image();
 
       img.onload = () => {
@@ -43,6 +43,10 @@ export const ItemCard = ({ focaccia }: ItemCardProps) => {
 
       // Cargar inmediatamente sin delay
       img.src = focaccia.imageUrl;
+    } else if (!focaccia.imageUrl || focaccia.imageUrl.trim() === '') {
+      // Si no hay imagen, mostrar error inmediatamente
+      setImageError(true);
+      setShowSkeleton(false);
     }
   }, [focaccia.imageUrl, imageLoaded, imageError]);
 
@@ -61,11 +65,11 @@ export const ItemCard = ({ focaccia }: ItemCardProps) => {
           )}
           <img
             ref={imgRef}
-            src={imageLoaded ? focaccia.imageUrl : ''}
+            src={imageLoaded && focaccia.imageUrl ? focaccia.imageUrl : ''}
             alt={focaccia.name}
             className={`itemImage ${imageLoaded ? 'loaded' : ''}`}
             style={{
-              display: imageLoaded ? 'block' : 'none',
+              display: imageLoaded && focaccia.imageUrl ? 'block' : 'none',
               opacity: imageLoaded ? 1 : 0,
               transition: 'all 0.3s ease-in-out'
             }}

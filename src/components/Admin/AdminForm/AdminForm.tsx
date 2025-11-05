@@ -21,11 +21,13 @@ export const AdminForm = () => {
     compressionRatio: number;
   } | null>(null);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [imageKey, setImageKey] = useState(0); // Para forzar re-render del componente imagen
 
   useEffect(() => {
     // Limpiar estados de imagen tanto al crear como al cambiar de edición
     setOptimizedImageFile(null);
     setOptimizationStats(null);
+    setImageKey(prev => prev + 1); // Forzar re-render del componente imagen
   }, [focacciaEdit]);
 
   const handleClearImage = () => {
@@ -38,7 +40,7 @@ export const AdminForm = () => {
     if (file.size > 0 && file.name) {
       setOptimizedImageFile(file);
       setOptimizationStats(stats);
-      
+
       if (stats.compressionRatio > 0) {
         toast.success(`¡Imagen optimizada! Reducción del ${stats.compressionRatio}%`);
       } else {
@@ -51,14 +53,14 @@ export const AdminForm = () => {
     try {
       // Usar el ImageService ya configurado pero SIN optimización adicional (ya está optimizada)
       const response = await ImageService.uploadImage(file, { enableOptimization: false });
-      
+
       if (!response.success) {
         throw new Error(response.error || 'Error al subir imagen');
       }
 
-      return { 
-        url: response.url, 
-        publicId: response.public_id 
+      return {
+        url: response.url,
+        publicId: response.public_id
       };
     } catch (error) {
       console.error('Error en uploadImageToCloudinary:', error);
@@ -97,7 +99,7 @@ export const AdminForm = () => {
             setIsUploadingImage(true);
             let imageUrl = focacciaEdit?.imageUrl || '';
             let imagePublicId = focacciaEdit?.imagePublicId || '';
-            
+
             // Si hay una imagen optimizada nueva, subirla a Cloudinary ahora
             if (optimizedImageFile) {
               try {
@@ -124,7 +126,7 @@ export const AdminForm = () => {
                 return;
               }
             }
-            
+
             // Validar que tenemos imagen
             if (!imageUrl && !focacciaEdit) {
               toast.error('Debes seleccionar una imagen.');
@@ -144,6 +146,10 @@ export const AdminForm = () => {
               });
               toast.success('Focaccia actualizada exitosamente');
               setFocacciaEdit(null);
+              // Resetear estados de imagen después de actualización exitosa
+              setOptimizedImageFile(null);
+              setOptimizationStats(null);
+              setImageKey(prev => prev + 1); // Forzar re-render del componente imagen
             } else {
               // Modo creación
               const focacciaData: FocacciaCreate = {
@@ -158,10 +164,12 @@ export const AdminForm = () => {
               };
               await createFocaccia(focacciaData);
               toast.success('Focaccia creada exitosamente');
+              // Resetear estados de imagen después de creación exitosa
+              setOptimizedImageFile(null);
+              setOptimizationStats(null);
+              setImageKey(prev => prev + 1); // Forzar re-render del componente imagen
             }
             resetForm();
-            setOptimizedImageFile(null);
-            setOptimizationStats(null);
           } catch (err) {
             toast.error('Error al guardar la focaccia: ' + (err));
           } finally {
@@ -196,6 +204,7 @@ export const AdminForm = () => {
               <div className='formGroup'>
                 <label>Imagen:</label>
                 <ImageOptimizerPreview
+                  key={focacciaEdit ? `edit-${focacciaEdit.id}` : `new-focaccia-${imageKey}`}
                   onImageOptimized={handleImageOptimized}
                   options={{
                     maxWidth: 1200,
@@ -208,16 +217,16 @@ export const AdminForm = () => {
                 />
                 {optimizationStats && (
                   <div className={optimizationStats.compressionRatio > 0 ? "success" : "info"}>
-                    {optimizationStats.compressionRatio > 0 
-                      ? `✅ Imagen optimizada: ${optimizationStats.compressionRatio}% de reducción` 
+                    {optimizationStats.compressionRatio > 0
+                      ? `✅ Imagen optimizada: ${optimizationStats.compressionRatio}% de reducción`
                       : '✨ Imagen procesada: Ya tenía tamaño óptimo'
                     }
                     <br />
                     <small>
                       ({(optimizationStats.originalSize / 1024).toFixed(1)}KB → {(optimizationStats.optimizedSize / 1024).toFixed(1)}KB)
                     </small>
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={handleClearImage}
                       className="clearImageButton"
                       style={{ marginLeft: '10px', fontSize: '12px', padding: '2px 6px' }}
@@ -254,6 +263,7 @@ export const AdminForm = () => {
                 setFocacciaEdit(null);
                 setOptimizedImageFile(null);
                 setOptimizationStats(null);
+                setImageKey(prev => prev + 1); // Forzar re-render del componente imagen
               }}>Cancelar</button>
             </div>
           </Form>

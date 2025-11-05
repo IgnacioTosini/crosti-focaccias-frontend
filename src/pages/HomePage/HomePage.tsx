@@ -12,7 +12,7 @@ import './_homePage.scss'
 
 export const HomePage = () => {
     const { isOpen } = usePedidoContext();
-    
+
     // Precargar datos de focaccias de manera eficiente
     usePrefetchFocaccias();
 

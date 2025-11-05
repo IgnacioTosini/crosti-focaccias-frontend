@@ -16,13 +16,22 @@ export const OurMenu = () => {
     }
   }, [isLoading, focaccias]);
 
+  // Si estamos cargando y no tenemos datos en caché, mostrar mensaje especial
+  const showLoadingMessage = isLoading && focaccias.length === 0;
+
   return (
     <div className='ourMenu'>
       <h2 className='ourMenuTitle'>Nuestras Focaccias</h2>
 
       <div className='menuItemsContainer'>
-        {isLoading ? (
-          // Mostrar skeleton loading mientras carga
+        {showLoadingMessage ? (
+          <div className='loadingState'>
+            <div className="loadingSpinner">🔄</div>
+            <p>Cargando nuestras deliciosas focaccias...</p>
+            <small>Esto puede tomar unos segundos la primera vez</small>
+          </div>
+        ) : isLoading ? (
+          // Mostrar skeleton loading mientras carga (cuando hay datos en caché)
           Array.from({ length: 6 }, (_, index) => (
             <ItemCardSkeleton key={`skeleton-${index}`} />
           ))
