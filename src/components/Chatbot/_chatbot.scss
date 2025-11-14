@@ -231,6 +231,7 @@
             flex-direction: row-reverse;
 
             .messageBubble {
+                max-width: 100%;
                 background: linear-gradient(135deg, $quaternary-color 0%, $quinary-color 100%);
                 color: $color-text-tertiary;
                 border-bottom-right-radius: 4px;
@@ -239,6 +240,7 @@
 
         &.bot {
             .messageBubble {
+                max-width: 85%;
                 background: $tertiary-color;
                 color: $color-text;
                 border-bottom-left-radius: 4px;
@@ -272,7 +274,6 @@
 
         .messageContent {
             .messageBubble {
-                max-width: 70%;
                 padding: 1rem 1.25rem;
                 border-radius: 1rem;
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
