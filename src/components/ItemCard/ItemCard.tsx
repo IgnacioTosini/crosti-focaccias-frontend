@@ -53,8 +53,6 @@ export const ItemCard = ({ focaccia }: ItemCardProps) => {
   const handleAddToCart = () => {
     addToCart(focaccia);
   };
-  console.log(focaccia.featured)
-  console.log(focaccia.isVeggie)
 
   return (
     <>
