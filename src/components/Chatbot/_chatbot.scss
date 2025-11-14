@@ -6,6 +6,39 @@
     right: 1.5rem;
     z-index: 100000;
 
+    .chatbotTooltip {
+        position: absolute;
+        bottom: 80px;
+        right: 0;
+        background: linear-gradient(135deg, $quinary-color 10%, $quaternary-color 90%);
+        color: $color-text-tertiary;
+        padding: 0.75rem 1.25rem;
+        border-radius: 1rem;
+        font-size: $font-size-small;
+        font-weight: $font-weight-medium;
+        box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        white-space: nowrap;
+        animation: bounce 2s ease-in-out infinite;
+        
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid $quaternary-color;
+        }
+
+        @media (max-width: 480px) {
+            font-size: $font-size-xsmall;
+            padding: 0.6rem 1rem;
+            bottom: 75px;
+        }
+    }
+
     .chatbotButton {
         display: flex;
         align-items: center;
@@ -194,12 +227,12 @@
             gap: 0.5rem;
             max-height: 120px;
             overflow-y: auto;
-            padding: 1rem 1.25rem 1.5rem;
+            padding: .5rem;
             background: $secondary-color;
             border-top: 1px solid #e2e8f0;
 
             button {
-                padding: 8px 14px;
+                padding: 0.5rem 1rem;
                 background: $secondary-color;
                 border: 1px solid #e2e8f0;
                 border-radius: 1rem;
@@ -377,5 +410,14 @@
     30% {
         transform: translateY(-10px);
         opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
     }
 }

@@ -54,12 +54,12 @@ export const Chatbot = () => {
         }
     };
 
-    const handleKeyPress = (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            handleSendMessage();
-        }
-    };
+    /*     const handleKeyPress = (e: React.KeyboardEvent) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSendMessage();
+            }
+        }; */
 
     const formatTime = (date: Date) => {
         return date.toLocaleTimeString('es-AR', {
@@ -71,13 +71,18 @@ export const Chatbot = () => {
     return (
         <div className="chatbotContainer">
             {!isOpen && (
-                <button
-                    className="chatbotButton"
-                    onClick={() => setIsOpen(true)}
-                    aria-label="Abrir chat"
-                >
-                    <img src={CHATBOT_CONFIG.theme.botAvatar} alt="Chatbot" />
-                </button>
+                <>
+                    <div className="chatbotTooltip">
+                        ¿Tenés dudas? ¡Preguntame! 💬
+                    </div>
+                    <button
+                        className="chatbotButton"
+                        onClick={() => setIsOpen(true)}
+                        aria-label="Abrir chat"
+                    >
+                        <img src={CHATBOT_CONFIG.theme.botAvatar} alt="Chatbot" />
+                    </button>
+                </>
             )}
 
             {isOpen && (
@@ -149,7 +154,7 @@ export const Chatbot = () => {
                         </div>
                     )}
 
-                    <div className="chatbotInput">
+                    {/*                     <div className="chatbotInput">
                         <input
                             type="text"
                             value={inputValue}
@@ -165,7 +170,7 @@ export const Chatbot = () => {
                         >
                             ➤
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             )}
         </div>

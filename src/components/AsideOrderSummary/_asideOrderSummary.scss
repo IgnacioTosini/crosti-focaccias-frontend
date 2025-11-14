@@ -10,7 +10,7 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); // Overlay visible semi-transparente
-    z-index: 2000; // Mayor que el header (1000)
+    z-index: 200000; // Mayor que el header (1000)
 
     .asideOrderSummary {
         display: flex;
