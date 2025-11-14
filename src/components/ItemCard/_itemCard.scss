@@ -161,6 +161,8 @@
         color: $color-text-tertiary;
         padding: 0.25rem 0.5rem;
         border-radius: 1rem;
+        font-size: $font-size-normal;
+        z-index: 3;
     }
 }
 

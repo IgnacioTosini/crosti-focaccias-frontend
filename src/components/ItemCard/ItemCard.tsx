@@ -53,6 +53,8 @@ export const ItemCard = ({ focaccia }: ItemCardProps) => {
   const handleAddToCart = () => {
     addToCart(focaccia);
   };
+  console.log(focaccia.featured)
+  console.log(focaccia.isVeggie)
 
   return (
     <>
@@ -63,17 +65,19 @@ export const ItemCard = ({ focaccia }: ItemCardProps) => {
               <div className='skeletonShimmer'></div>
             </div>
           )}
-          <img
-            ref={imgRef}
-            src={imageLoaded && focaccia.imageUrl ? focaccia.imageUrl : ''}
-            alt={focaccia.name}
-            className={`itemImage ${imageLoaded ? 'loaded' : ''}`}
-            style={{
-              display: imageLoaded && focaccia.imageUrl ? 'block' : 'none',
-              opacity: imageLoaded ? 1 : 0,
-              transition: 'all 0.3s ease-in-out'
-            }}
-          />
+          {imageLoaded && focaccia.imageUrl && (
+            <img
+              ref={imgRef}
+              src={focaccia.imageUrl}
+              alt={focaccia.name}
+              className='itemImage loaded'
+              style={{
+                display: 'block',
+                opacity: 1,
+                transition: 'all 0.3s ease-in-out'
+              }}
+            />
+          )}
           {imageError && (
             <div className='imageError'>
               <span>⚠️ Error al cargar imagen</span>

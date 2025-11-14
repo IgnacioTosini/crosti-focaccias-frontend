@@ -68,7 +68,7 @@ class PersistentCache {
     get<T>(key: string): T | null {
         // Primero verificar memoria
         let cached = this.memoryCache.get(key) as CacheItem<T> | undefined;
-        
+
         // Si no está en memoria, verificar localStorage
         if (!cached) {
             const storedData = this.getFromStorage(key);
@@ -134,7 +134,7 @@ class PersistentCache {
     getCacheInfo(): { keys: string[]; memorySize: number; storageSize: number } {
         const keys = Array.from(this.memoryCache.keys());
         const storageKeys = Object.keys(localStorage).filter(key => key.startsWith(CACHE_PREFIX));
-        
+
         return {
             keys,
             memorySize: this.memoryCache.size,
@@ -173,7 +173,7 @@ export class ProductService {
 
     static async getFocaccias() {
         const cacheKey = 'focaccias';
-        
+
         // Intentar obtener del caché primero
         const cachedData = cache.get<{ data: FocacciaItem[]; message: string; success: boolean }>(cacheKey);
         if (cachedData) {
@@ -194,7 +194,7 @@ export class ProductService {
     // Nuevo método para carga por lotes - obtener solo los primeros productos
     static async getFocacciasBatch(limit?: number) {
         const cacheKey = limit ? `focaccias_batch_${limit}` : 'focaccias_batch';
-        
+
         // Intentar obtener del caché primero
         const cachedData = cache.get<{ data: FocacciaItem[]; message: string; success: boolean }>(cacheKey);
         if (cachedData) {
@@ -221,12 +221,12 @@ export class ProductService {
     private static async checkForUpdatesInBackground(cacheKey: string) {
         try {
             const response = await axios.get(BASE_URL_PRODUCT);
-            
+
             // Verificar si los datos han cambiado
             if (cache.hasChanged(cacheKey, response.data)) {
                 // Actualizar caché con nuevos datos
                 cache.set(cacheKey, response.data);
-                
+
                 // Disparar evento personalizado para notificar cambios
                 window.dispatchEvent(new CustomEvent('focacciaDataUpdated', {
                     detail: { data: response.data, cacheKey }
@@ -239,7 +239,7 @@ export class ProductService {
 
     static async getFocacciaById(id: number) {
         const cacheKey = `focaccia_${id}`;
-        
+
         // Intentar obtener del caché primero
         const cachedData = cache.get<{ data: FocacciaItem; message: string; success: boolean }>(cacheKey);
         if (cachedData) {
@@ -247,10 +247,10 @@ export class ProductService {
         }
 
         const response = await axios.get(`${BASE_URL_PRODUCT}/${id}`);
-        
+
         // Guardar en caché individual
         cache.set(cacheKey, response.data);
-        
+
         return response.data;
     }
 
@@ -280,7 +280,7 @@ export class ProductService {
 
     static async getFeaturedFocaccias() {
         const cacheKey = 'featuredFocaccias';
-        
+
         // Intentar obtener del caché primero
         const cachedData = cache.get<{ data: FocacciaItem[]; message: string; success: boolean }>(cacheKey);
         if (cachedData) {
@@ -302,12 +302,12 @@ export class ProductService {
     private static async checkForFeaturedUpdatesInBackground(cacheKey: string) {
         try {
             const response = await axios.get(`${BASE_URL_PRODUCT}/featured`);
-            
+
             // Verificar si los datos han cambiado
             if (cache.hasChanged(cacheKey, response.data)) {
                 // Actualizar caché con nuevos datos
                 cache.set(cacheKey, response.data);
-                
+
                 // Disparar evento personalizado para notificar cambios
                 window.dispatchEvent(new CustomEvent('featuredFocacciaDataUpdated', {
                     detail: { data: response.data, cacheKey }

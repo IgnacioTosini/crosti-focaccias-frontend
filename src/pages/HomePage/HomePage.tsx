@@ -6,6 +6,7 @@ import { Header } from '../../components/Header/Header'
 import { HowToOrder } from '../../components/HowToOrder/HowToOrder'
 import { OurMenu } from '../../components/OurMenu/OurMenu'
 import { AsideOrderSummary } from '../../components/AsideOrderSummary/AsideOrderSummary';
+import { Chatbot } from '../../components/Chatbot/Chatbot';
 import { usePedidoContext } from '../../context/pedidoContext';
 import { usePrefetchFocaccias } from '../../hooks/usePrefetchFocaccias';
 import './_homePage.scss'
@@ -48,6 +49,7 @@ export const HomePage = () => {
             </section>
 
             {isOpen && <AsideOrderSummary />}
+            <Chatbot />
         </main>
     )
 }
