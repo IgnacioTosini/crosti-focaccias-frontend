@@ -60,7 +60,7 @@ export const QUICK_REPLIES: QuickReply[] = [
  * Configuración del mensaje de bienvenida
  */
 export const WELCOME_MESSAGE = {
-    text: '¡Hola! 👋 Soy el asistente virtual de Crosti Focaccias. ¿En qué puedo ayudarte hoy?',
+    text: '¡Hola! 👋 Soy el asistente virtual de Crosti Focaccias.\n\nPuedes escribir tu pregunta o seleccionar una de las opciones de abajo:',
     sender: 'bot' as const
 };
 

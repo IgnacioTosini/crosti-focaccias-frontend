@@ -82,7 +82,7 @@ class ChatbotServiceClass {
     getWelcomeMessage(): ChatMessage {
         return {
             id: 'welcome',
-            text: '¡Hola! Soy el asistente virtual de Crosti Focaccias 🍕. Puedo ayudarte con información sobre nuestras focaccias, precios y pedidos. ¿En qué puedo ayudarte?',
+            text: '¡Hola! 👋 Soy el asistente virtual de Crosti Focaccias.\n\nPuedes escribir tu pregunta o seleccionar una de las opciones de abajo:',
             sender: 'bot',
             timestamp: new Date()
         };
