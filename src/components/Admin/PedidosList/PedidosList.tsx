@@ -13,7 +13,11 @@ export const PedidosList = () => {
         <div className='productListContainer'>
             <div className='header'>
                 <h1>Pedidos Existentes</h1>
-                <button className='downButton' onClick={() => setOpen(o => !o)}>
+                <button
+                    className='downButton'
+                    onClick={() => setOpen(o => !o)}
+                    aria-label={open ? 'Ocultar lista de pedidos' : 'Mostrar lista de pedidos'}
+                >
                     {open ? <FaAngleUp /> : <FaAngleDown />}
                 </button>
             </div>
@@ -21,7 +25,9 @@ export const PedidosList = () => {
                 className={`productListUl${open ? ' open' : ''}`}
             >
                 {pedidosArray.map((pedido: Pedido) => (
-                    <AdminOrderCard key={pedido.id} order={pedido} />
+                    <li key={pedido.id}>
+                        <AdminOrderCard order={pedido} />
+                    </li>
                 ))}
             </ul>
         </div>

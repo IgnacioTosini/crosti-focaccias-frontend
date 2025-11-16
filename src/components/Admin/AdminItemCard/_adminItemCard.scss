@@ -12,10 +12,6 @@
     transition: background-color 0.2s ease-in-out;
     cursor: pointer;
 
-    &:nth-last-child(1) {
-        border-radius: 0 0 1rem 1rem;
-    }
-
     &:hover {
         background-color: color.adjust($secondary-color, $lightness: -5%);
     }

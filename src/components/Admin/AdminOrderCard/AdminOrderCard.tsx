@@ -31,7 +31,13 @@ export const AdminOrderCard = ({ order }: AdminOrderCardProps) => {
                         ))}
                     </ul>
                 </div>
-                <button className='adminOrderDeleteButton' onClick={() => deletePedido(order.id)}><BiTrash /></button>
+                <button 
+                    className='adminOrderDeleteButton' 
+                    onClick={() => deletePedido(order.id)}
+                    aria-label={`Eliminar pedido ${order.id}`}
+                >
+                    <BiTrash />
+                </button>
             </div>
         </div>
     )

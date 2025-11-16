@@ -13,7 +13,11 @@ export const ProductList = () => {
         <div className='productListContainer'>
             <div className='header'>
                 <h1>Focaccias Existentes</h1>
-                <button className='downButton' onClick={() => setOpen(o => !o)}>
+                <button
+                    className='downButton'
+                    onClick={() => setOpen(o => !o)}
+                    aria-label={open ? 'Ocultar lista de focaccias' : 'Mostrar lista de focaccias'}
+                >
                     {open ? <FaAngleUp /> : <FaAngleDown />}
                 </button>
             </div>
@@ -21,7 +25,9 @@ export const ProductList = () => {
                 className={`productListUl${open ? ' open' : ''}`}
             >
                 {focacciasArray.map((focaccia: FocacciaItem) => (
-                    <AdminItemCard key={focaccia.id} item={focaccia} />
+                    <li key={focaccia.id}>
+                        <AdminItemCard item={focaccia} />
+                    </li>
                 ))}
             </ul>
         </div>

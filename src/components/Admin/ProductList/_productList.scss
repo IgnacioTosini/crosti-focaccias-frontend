@@ -62,10 +62,13 @@
         padding: 0;
         margin: 0;
         width: 100%;
-        gap: 1.5rem;
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+        &:nth-last-child(1) {
+            border-radius: 0 0 1rem 1rem;
+        }
     }
 
     .open {

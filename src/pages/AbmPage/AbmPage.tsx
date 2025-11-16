@@ -17,13 +17,13 @@ export const AbmPage = () => {
   }, []);
 
   return (
-    <div className='abmPage'>
+    <main className='abmPage'>
       <AdminHeader />
       {isOpen && <AdminForm />}
       <div className="abmPageContent">
         <ProductList />
         <PedidosList />
       </div>
-    </div>
+    </main>
   )
 }

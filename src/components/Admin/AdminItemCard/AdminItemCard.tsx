@@ -52,8 +52,20 @@ export const AdminItemCard = ({ item }: AdminItemCardProps) => {
         <img src={item.imageUrl} alt={item.name} className='adminItemImage' />
       </div>
       <div className='adminItemCardActions'>
-        <button className='adminItemCardEditButton' onClick={handleEdit}><FaEdit /></button>
-        <button className='adminItemCardDeleteButton' onClick={handleDelete}><FaTrash /></button>
+        <button 
+          className='adminItemCardEditButton' 
+          onClick={handleEdit}
+          aria-label={`Editar ${item.name}`}
+        >
+          <FaEdit />
+        </button>
+        <button 
+          className='adminItemCardDeleteButton' 
+          onClick={handleDelete}
+          aria-label={`Eliminar ${item.name}`}
+        >
+          <FaTrash />
+        </button>
       </div>
     </div>
   )
