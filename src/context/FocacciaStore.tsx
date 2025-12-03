@@ -78,19 +78,23 @@ export const FocacciaStore: React.FC<{ children: React.ReactNode }> = ({ childre
             }
 
             const response = await ProductService.getFocaccias();
-            
+
             // Actualizar los datos independientemente de si vienen del caché o no
             setFocaccias(response.data || []);
             setMessage(response.message || "");
-            
+
             // Marcar como cargado si no estaba antes
             if (!isDataLoaded) {
                 setIsDataLoaded(true);
             }
         } catch (error) {
             setMessage(`Error al obtener las focaccias: ${error}`);
-            showToast("Error al obtener las focaccias", "error");
-            setFocaccias([]); // Limpiar datos en caso de error
+            // No mostrar toast aquí, ya que ProductService manejará el caso de caché
+            // Solo mostrar si realmente no hay datos
+            if (!isDataLoaded) {
+                showToast("No se pudieron cargar las focaccias", "error");
+                setFocaccias([]); // Limpiar datos solo si nunca se cargaron
+            }
         } finally {
             setIsLoading(false);
         }
@@ -146,11 +150,11 @@ export const FocacciaStore: React.FC<{ children: React.ReactNode }> = ({ childre
         try {
             setIsLoading(true);
             const response = await ProductService.getFocacciasBatch(limit || initialBatchSize);
-            
+
             setFocaccias(response.data || []);
             setMessage(response.message || "");
             setIsDataLoaded(true);
-            
+
             // Si recibimos menos productos de los solicitados, no hay más datos
             if (limit && response.data && response.data.length < limit) {
                 setHasMoreData(false);
@@ -166,19 +170,19 @@ export const FocacciaStore: React.FC<{ children: React.ReactNode }> = ({ childre
 
     const loadMoreFocaccias = useCallback(async () => {
         if (!hasMoreData || isLoadingMore) return;
-        
+
         try {
             setIsLoadingMore(true);
             const response = await ProductService.getFocaccias(); // Cargar todos los restantes
-            
+
             // Solo agregar nuevos productos que no estén ya en la lista
             const currentIds = focaccias.map(f => f.id);
             const newFocaccias = response.data?.filter((f: FocacciaItem) => !currentIds.includes(f.id)) || [];
-            
+
             if (newFocaccias.length > 0) {
                 setFocaccias(prev => [...prev, ...newFocaccias]);
             }
-            
+
             setHasMoreData(false); // Ya cargamos todos
             setMessage(response.message || "");
         } catch (error) {
@@ -233,24 +237,24 @@ export const FocacciaStore: React.FC<{ children: React.ReactNode }> = ({ childre
     }, []);
 
     return (
-        <FocacciaContext.Provider value={{ 
-            focaccias, 
-            focaccia, 
-            isLoading, 
+        <FocacciaContext.Provider value={{
+            focaccias,
+            focaccia,
+            isLoading,
             isLoadingMore,
-            message, 
-            focacciaEdit, 
-            isOpen, 
-            setIsOpen, 
-            createFocaccia, 
-            getFocaccias, 
+            message,
+            focacciaEdit,
+            isOpen,
+            setIsOpen,
+            createFocaccia,
+            getFocaccias,
             getFocacciasBatch,
             loadMoreFocaccias,
-            getFocacciaById, 
-            updateFocaccia, 
-            deleteFocaccia, 
-            getFeaturedFocaccias, 
-            setFocacciaEdit 
+            getFocacciaById,
+            updateFocaccia,
+            deleteFocaccia,
+            getFeaturedFocaccias,
+            setFocacciaEdit
         }}>
             {children}
         </FocacciaContext.Provider>

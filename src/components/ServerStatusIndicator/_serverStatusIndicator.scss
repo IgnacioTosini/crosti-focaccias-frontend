@@ -1,0 +1,113 @@
+.server-status {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 1000;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    animation: slideInRight 0.3s ease-out;
+    max-width: 300px;
+    
+    // Auto-hide después de 5 segundos
+    animation: slideInRight 0.3s ease-out, fadeOut 0.5s ease-out 4.5s forwards;
+
+    &__content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    &__icon {
+        font-size: 24px;
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    &__text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    &__main {
+        font-weight: 600;
+        font-size: 14px;
+        color: #fff;
+    }
+
+    &__sub {
+        font-size: 12px;
+        opacity: 0.9;
+        color: #fff;
+    }
+
+    // Estados
+    &--hibernating {
+        background: linear-gradient(135deg, #ffa726 0%, #fb8c00 100%);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    &--error {
+        background: linear-gradient(135deg, #ef5350 0%, #e53935 100%);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    &--unknown {
+        background: linear-gradient(135deg, #78909c 0%, #546e7a 100%);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+// Responsive
+@media (max-width: 768px) {
+    .server-status {
+        top: 70px;
+        right: 10px;
+        padding: 10px 16px;
+        max-width: 250px;
+
+        &__icon {
+            font-size: 20px;
+        }
+
+        &__main {
+            font-size: 13px;
+        }
+
+        &__sub {
+            font-size: 11px;
+        }
+    }
+}

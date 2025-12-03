@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useProductCache } from '../../hooks/useProductCache';
+import { ProductService } from '../../services/ProductService';
 import './CacheDebugger.scss';
 
 interface CacheDebuggerProps {
@@ -18,6 +19,23 @@ export const CacheDebugger: React.FC<CacheDebuggerProps> = ({ show = false }) =>
         getCacheInfo();
     };
 
+    const handleClearFallback = () => {
+        if (window.confirm('¿Estás seguro de que quieres limpiar el caché de fallback?')) {
+            ProductService.clearFallbackCache();
+            getCacheInfo();
+        }
+    };
+
+    const getServerStatusDisplay = () => {
+        const statusEmoji: Record<string, string> = {
+            active: '✅',
+            hibernating: '🔄',
+            error: '❌',
+            unknown: '🔍'
+        };
+        return `${statusEmoji[cacheInfo.serverStatus] || '❓'} ${cacheInfo.serverStatus}`;
+    };
+
     return (
         <div className={`cache-debugger ${isExpanded ? 'expanded' : 'collapsed'}`}>
             <button 
@@ -31,6 +49,10 @@ export const CacheDebugger: React.FC<CacheDebuggerProps> = ({ show = false }) =>
                 <div className="cache-debugger-content">
                     <div className="cache-stats">
                         <div className="stat">
+                            <span className="label">Estado Servidor:</span>
+                            <span className="value">{getServerStatusDisplay()}</span>
+                        </div>
+                        <div className="stat">
                             <span className="label">Memoria:</span>
                             <span className="value">{cacheInfo.memorySize} items</span>
                         </div>
@@ -38,14 +60,22 @@ export const CacheDebugger: React.FC<CacheDebuggerProps> = ({ show = false }) =>
                             <span className="label">Storage:</span>
                             <span className="value">{cacheInfo.storageSize} items</span>
                         </div>
+                        <div className="stat">
+                            <span className="label">Fallback:</span>
+                            <span className="value">{cacheInfo.fallbackSize} items</span>
+                        </div>
                     </div>
                     
                     <div className="cache-keys">
                         <strong>Claves en caché:</strong>
                         <ul>
-                            {cacheInfo.keys.map((key) => (
-                                <li key={key}>{key}</li>
-                            ))}
+                            {cacheInfo.keys.length > 0 ? (
+                                cacheInfo.keys.map((key) => (
+                                    <li key={key}>{key}</li>
+                                ))
+                            ) : (
+                                <li style={{ color: '#999' }}>Sin datos en caché</li>
+                            )}
                         </ul>
                     </div>
                     
@@ -59,6 +89,12 @@ export const CacheDebugger: React.FC<CacheDebuggerProps> = ({ show = false }) =>
                             className="force-refresh"
                         >
                             {isRefreshing ? 'Refrescando...' : 'Forzar Refresh'}
+                        </button>
+                        <button 
+                            onClick={handleClearFallback}
+                            className="clear-fallback"
+                        >
+                            Limpiar Fallback
                         </button>
                     </div>
                 </div>

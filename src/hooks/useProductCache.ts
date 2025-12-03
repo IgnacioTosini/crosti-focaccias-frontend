@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { ProductService } from '../services/ProductService';
+import { ProductService, ServerStatus } from '../services/ProductService';
 
 interface CacheInfo {
     keys: string[];
     memorySize: number;
     storageSize: number;
+    fallbackSize: number;
+    serverStatus: ServerStatus;
 }
 
 /**
@@ -12,7 +14,13 @@ interface CacheInfo {
  * Proporciona información y control sobre el sistema de caché
  */
 export const useProductCache = () => {
-    const [cacheInfo, setCacheInfo] = useState<CacheInfo>({ keys: [], memorySize: 0, storageSize: 0 });
+    const [cacheInfo, setCacheInfo] = useState<CacheInfo>({ 
+        keys: [], 
+        memorySize: 0, 
+        storageSize: 0, 
+        fallbackSize: 0,
+        serverStatus: 'unknown' as ServerStatus
+    });
     const [isRefreshing, setIsRefreshing] = useState(false);
 
     // Obtener información del caché
