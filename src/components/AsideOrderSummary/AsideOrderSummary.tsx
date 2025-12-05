@@ -12,7 +12,9 @@ import './_asideOrderSummary.scss';
 export const AsideOrderSummary = () => {
     const { preOrder, clearPreOrder, setIsOpen, createPedido } = usePedidoContext();
     const [clientPhone, setClientPhone] = useState('');
+    const [phoneError, setPhoneError] = useState('');
     const [isClosing, setIsClosing] = useState(false);
+    const [isSendingOrder, setIsSendingOrder] = useState(false);
     const panelRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
 
@@ -46,9 +48,25 @@ export const AsideOrderSummary = () => {
     };
 
     const isValidPhone = (phone: string) => {
-        // Valida que tenga al menos 10 dígitos
-        const phoneRegex = /^\+?[\d\s-]{10,}$/;
+        // Solo números, al menos 10 dígitos
+        const phoneRegex = /^\d{10,}$/;
         return phoneRegex.test(phone);
+    };
+
+    const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        // Solo permitir números
+        const numbersOnly = value.replace(/\D/g, '');
+        setClientPhone(numbersOnly);
+        
+        // Validar y mostrar error
+        if (numbersOnly.length > 0 && numbersOnly.length < 10) {
+            setPhoneError('El número debe tener al menos 10 dígitos');
+        } else if (numbersOnly.length > 15) {
+            setPhoneError('El número no puede tener más de 15 dígitos');
+        } else {
+            setPhoneError('');
+        }
     };
 
     const generateOrderMessage = () => {
@@ -75,10 +93,15 @@ export const AsideOrderSummary = () => {
     };
 
     const handleSendWhatsApp = async () => {
+        // Prevenir múltiples clicks
+        if (isSendingOrder) return;
+
         if (!isValidPhone(clientPhone)) {
-            toast.error('Por favor, ingresa un número de teléfono válido');
+            setPhoneError('Por favor, ingresa un número de teléfono válido (mínimo 10 dígitos)');
             return;
         }
+
+        setIsSendingOrder(true);
 
         // Guardar el pedido en BD
         const pedidoData = {
@@ -101,10 +124,12 @@ export const AsideOrderSummary = () => {
 
             toast.success('Pedido guardado exitosamente. ¡Serás redirigido a WhatsApp!');
             setClientPhone('');
+            setPhoneError('');
             handleClose();
         } catch (error) {
             toast.error('Error al guardar el pedido');
             console.error(error);
+            setIsSendingOrder(false);
         }
     };
 
@@ -146,18 +171,21 @@ export const AsideOrderSummary = () => {
                             <input
                                 type='tel'
                                 id='clientPhone'
-                                placeholder='+54 9 11 1234-5678'
+                                placeholder='1112345678 (solo números)'
                                 value={clientPhone}
-                                onChange={(e) => setClientPhone(e.target.value)}
-                                className='phoneInput'
+                                onChange={handlePhoneChange}
+                                className={`phoneInput ${phoneError ? 'error' : ''}`}
+                                maxLength={15}
                             />
+                            {phoneError && <span className='phoneError'>{phoneError}</span>}
                         </div>
                         <button
                             className='asideOrderSummaryButton'
                             onClick={handleSendWhatsApp}
-                            disabled={!isValidPhone(clientPhone)}
+                            disabled={!isValidPhone(clientPhone) || isSendingOrder}
                         >
-                            <FiMessageCircle /><span>Enviar pedido por WhatsApp</span>
+                            <FiMessageCircle />
+                            <span>{isSendingOrder ? 'Enviando...' : 'Enviar pedido por WhatsApp'}</span>
                         </button>
                         <span className='asideOrderSummaryDisclaimer'>Te llevará a WhatsApp con tu pedido completo</span>
                     </div>

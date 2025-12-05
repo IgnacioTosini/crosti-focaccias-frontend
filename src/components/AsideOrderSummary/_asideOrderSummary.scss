@@ -208,9 +208,25 @@
                         border-color: $color-button;
                     }
 
+                    &.error {
+                        border-color: #ef5350;
+                        
+                        &:focus {
+                            border-color: #e53935;
+                        }
+                    }
+
                     &::placeholder {
                         color: color.scale($color-text-secondary, $lightness: 30%);
                     }
+                }
+
+                .phoneError {
+                    display: block;
+                    margin-top: 0.5rem;
+                    font-size: $font-size-small;
+                    color: #ef5350;
+                    font-weight: $font-weight-medium;
                 }
             }
 

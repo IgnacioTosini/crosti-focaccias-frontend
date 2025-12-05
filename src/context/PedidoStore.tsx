@@ -70,7 +70,7 @@ export const PedidoStore: React.FC<{ children: React.ReactNode }> = ({ children 
             setMessage(response.message);
             await getPedidos();
             clearPreOrder(); // limpiar carrito local al crear pedido
-            showToast("Pedido creado exitosamente", "success");
+            // Toast movido a AsideOrderSummary para evitar duplicados
             return response.data;
         } catch (error) {
             setMessage(`Error al crear el pedido: ${error}`);
