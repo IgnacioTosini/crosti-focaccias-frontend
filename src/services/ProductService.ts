@@ -1,7 +1,8 @@
 import axios from "axios";
 import type { FocacciaItem, FocacciaCreate } from "../types";
+import { env } from "../config/env";
 
-const BASE_URL_PRODUCT = import.meta.env.VITE_BASE_URL || 'http://localhost:8080/api/focaccias';
+const BASE_URL_PRODUCT = env.VITE_BASE_URL || 'http://localhost:8080/api/focaccias';
 
 // Configuración del caché
 const CACHE_DURATION = 15 * 60 * 1000; // 15 minutos

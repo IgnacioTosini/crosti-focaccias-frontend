@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { env } from '../config/env';
 
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+const BASE_URL = env.VITE_BASE_URL?.replace('/api/focaccias', '') || 'http://localhost:8080';
 
 export interface ChatMessage {
     id: string;

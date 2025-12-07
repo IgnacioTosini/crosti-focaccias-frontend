@@ -6,6 +6,9 @@ import { ItemCardInOrder } from '../ItemCardInOrder/ItemCardInOrder';
 import { BiTrash } from 'react-icons/bi';
 import { FiMessageCircle } from 'react-icons/fi';
 import { toast } from 'react-toastify';
+import { z } from 'zod';
+import { phoneSchema, createPedidoSchema } from '../../schemas/pedidoSchema';
+import { env } from '../../config/env';
 import { animateAsideOrderSummaryOpen, animateAsideOrderSummaryClose } from '../../animations';
 import './_asideOrderSummary.scss';
 
@@ -47,25 +50,20 @@ export const AsideOrderSummary = () => {
         }, 400);
     };
 
-    const isValidPhone = (phone: string) => {
-        // Solo números, al menos 10 dígitos
-        const phoneRegex = /^\d{10,}$/;
-        return phoneRegex.test(phone);
-    };
-
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         // Solo permitir números
         const numbersOnly = value.replace(/\D/g, '');
         setClientPhone(numbersOnly);
         
-        // Validar y mostrar error
-        if (numbersOnly.length > 0 && numbersOnly.length < 10) {
-            setPhoneError('El número debe tener al menos 10 dígitos');
-        } else if (numbersOnly.length > 15) {
-            setPhoneError('El número no puede tener más de 15 dígitos');
-        } else {
-            setPhoneError('');
+        // Validar con Zod
+        try {
+            phoneSchema.parse(numbersOnly);
+            setPhoneError(''); // Éxito, limpiar error
+        } catch (error) {
+            if (error instanceof z.ZodError) {
+                setPhoneError(error.issues[0].message);
+            }
         }
     };
 
@@ -96,16 +94,11 @@ export const AsideOrderSummary = () => {
         // Prevenir múltiples clicks
         if (isSendingOrder) return;
 
-        if (!isValidPhone(clientPhone)) {
-            setPhoneError('Por favor, ingresa un número de teléfono válido (mínimo 10 dígitos)');
-            return;
-        }
-
         setIsSendingOrder(true);
 
-        // Guardar el pedido en BD
+        // Preparar datos del pedido
         const pedidoData = {
-            clientPhone: clientPhone.trim(),
+            clientPhone: clientPhone,
             focaccias: preOrder.pedidoFocaccias.map(item => ({
                 focacciaId: item.focaccia.id,
                 cantidad: item.cantidad
@@ -113,10 +106,14 @@ export const AsideOrderSummary = () => {
         };
 
         try {
-            await createPedido(pedidoData);
+            // Validar con Zod antes de enviar
+            const validatedData = createPedidoSchema.parse(pedidoData);
+
+            // Guardar el pedido en BD
+            await createPedido(validatedData);
 
             const message = generateOrderMessage();
-            const businessWhatsApp = import.meta.env.VITE_WHATSAPP_NUMBER;
+            const businessWhatsApp = env.VITE_WHATSAPP_NUMBER || '';
 
             // Abrir WhatsApp del negocio con el mensaje del cliente
             const whatsappUrl = `https://wa.me/${businessWhatsApp}?text=${encodeURIComponent(message)}`;
@@ -127,8 +124,19 @@ export const AsideOrderSummary = () => {
             setPhoneError('');
             handleClose();
         } catch (error) {
-            toast.error('Error al guardar el pedido');
-            console.error(error);
+            if (error instanceof z.ZodError) {
+                // Error de validación de Zod
+                const firstError = error.issues[0];
+                if (firstError.path.includes('clientPhone')) {
+                    setPhoneError(firstError.message);
+                } else {
+                    toast.error(firstError.message);
+                }
+            } else {
+                // Error del servidor
+                toast.error('Error al guardar el pedido');
+                console.error(error);
+            }
             setIsSendingOrder(false);
         }
     };
@@ -182,7 +190,7 @@ export const AsideOrderSummary = () => {
                         <button
                             className='asideOrderSummaryButton'
                             onClick={handleSendWhatsApp}
-                            disabled={!isValidPhone(clientPhone) || isSendingOrder}
+                            disabled={!!phoneError || clientPhone.length < 10 || isSendingOrder}
                         >
                             <FiMessageCircle />
                             <span>{isSendingOrder ? 'Enviando...' : 'Enviar pedido por WhatsApp'}</span>
